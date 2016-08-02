@@ -36,6 +36,9 @@ def _disk_render_path(args):
 
         resp = client.get(path)
         if resp.status_code != 200:
+            # If it's a 404, just skip this page
+            if resp.status_code == 404:
+                return
             raise Exception
         if needs_ext:
             mime = resp['Content-Type']
